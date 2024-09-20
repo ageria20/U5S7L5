@@ -45,6 +45,8 @@ public class BookingService {
             if (eventFormDB.getSeats() <= 0) {
                 throw new BadRequestException("THERE ARE NO AVAILABLE SEATS FOR THIS EVENT");
             }
+            // avrei dovuto mettere una colonna in piu' che mi dicesse quanti posti ho liberi che mi li aggiornasse
+            // e una colonna con un numero di posti fisso
             eventFormDB.setSeats(eventFormDB.getSeats() - 1);
             Booking newBooking = new Booking(userFormDB, eventFormDB);
             return this.bookingRepository.save(newBooking);
