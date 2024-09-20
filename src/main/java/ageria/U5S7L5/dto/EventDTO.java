@@ -13,5 +13,7 @@ public record EventDTO(@NotNull(message = "Title is required")
                        @NotNull(message = "The Event Place is required")
                        String eventPlace,
                        @NotNull(message = "Number of seats is required")
-                       int seats) {
+                       int seats,
+                       @NotNull
+                       Long manager_id) {
 }

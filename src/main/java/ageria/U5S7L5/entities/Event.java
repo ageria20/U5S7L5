@@ -30,4 +30,13 @@ public class Event {
     @OneToOne
     @JoinColumn(name = "manager_id")
     private User userManager;
+
+    public Event(String title, String description, LocalDate eventDate, String eventPlace, int seats, User userManager) {
+        this.title = title;
+        this.description = description;
+        this.eventDate = eventDate;
+        this.eventPlace = eventPlace;
+        this.seats = seats;
+        this.userManager = userManager;
+    }
 }
