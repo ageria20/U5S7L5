@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,7 +43,8 @@ public class EventService {
         if (this.eventRepository.existsByEventPlace(body.eventPlace())) {
             throw new BadRequestException("THIS EVENT IS ALREADY CREATED");
         }
-        User user = this.userService.findById(body.manager_id());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
         Event event = new Event(
                 body.title(),
                 body.description(),
