@@ -37,7 +37,7 @@ public class UserController {
 
     // GET ME endpoint
     @GetMapping("/me")
-    public List<Booking> updateEmployeeProfile(@AuthenticationPrincipal User currentAuthenticatedUser) {
+    public List<Booking> getUserBooking(@AuthenticationPrincipal User currentAuthenticatedUser) {
         return this.bookingService.getBookings((currentAuthenticatedUser.getId()));
     }
 
