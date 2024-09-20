@@ -2,6 +2,7 @@ package ageria.U5S7L5.controllers;
 
 
 import ageria.U5S7L5.dto.EventDTO;
+import ageria.U5S7L5.dto.EventUpdateDTO;
 import ageria.U5S7L5.entities.Event;
 import ageria.U5S7L5.exceptions.BadRequestException;
 import ageria.U5S7L5.service.EventService;
@@ -47,12 +48,21 @@ public class EventController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthorities('ADMIN, MANAGER)")
-    public Event updatEvent(@RequestBody @Validated EventDTO body, BindingResult resultValidation){
-        if(resultValidation.hasErrors()){
+    public Event updatEvent(@PathVariable Long id, @RequestBody @Validated EventUpdateDTO body, BindingResult resultValidation) {
+        if (resultValidation.hasErrors()) {
             String msg = resultValidation.getAllErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.joining());
-            throw new BadRequestException(msg)
+            throw new BadRequestException(msg);
         }
 
-        return this.eventService.findByIdAndUpdate()
+        return this.eventService.findByIdAndUpdate(id, body);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String deleteEvent(@PathVariable Long id) {
+        this.eventService.deleteEvent(id);
+        return "Event Correctly DELETED";
+
     }
 }

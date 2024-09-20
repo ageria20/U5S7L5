@@ -2,6 +2,7 @@ package ageria.U5S7L5.service;
 
 
 import ageria.U5S7L5.dto.EventDTO;
+import ageria.U5S7L5.dto.EventUpdateDTO;
 import ageria.U5S7L5.entities.Event;
 import ageria.U5S7L5.entities.User;
 import ageria.U5S7L5.exceptions.BadRequestException;
@@ -52,7 +53,7 @@ public class EventService {
         return this.eventRepository.save(event);
     }
 
-    public Event findByIdAndUpdate(Long id, EventDTO body) {
+    public Event findByIdAndUpdate(Long id, EventUpdateDTO body) {
         Event event = this.findById(id);
         event.setTitle(body.title());
         event.setDescription(body.description());
@@ -60,5 +61,18 @@ public class EventService {
         event.setEventPlace(body.eventPlace());
         event.setSeats(body.seats());
         return this.eventRepository.save(event);
+    }
+
+    // PATCH to update seats event
+    public Event findByIdAndUpdateSeats(Long id, EventUpdateDTO body) {
+        Event eventFromDB = this.findById(id);
+        eventFromDB.setSeats(body.seats());
+        return this.eventRepository.save(eventFromDB);
+    }
+
+    // DELETE
+    public void deleteEvent(Long id) {
+        Event event = this.findById(id);
+        this.eventRepository.delete(event);
     }
 }
