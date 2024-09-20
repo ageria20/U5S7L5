@@ -5,6 +5,7 @@ import ageria.U5S7L5.dto.BookingDTO;
 import ageria.U5S7L5.entities.Booking;
 import ageria.U5S7L5.entities.Event;
 import ageria.U5S7L5.entities.User;
+import ageria.U5S7L5.exceptions.BadRequestException;
 import ageria.U5S7L5.exceptions.NotFoundException;
 import ageria.U5S7L5.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,16 @@ public class BookingService {
     public Booking saveBooking(BookingDTO body) {
         Event eventFormDB = this.eventService.findById(body.event_id());
         User userFormDB = this.userService.findById(body.user_id());
-        eventFormDB.setSeats(eventFormDB.getSeats() - 1);
-        Booking newBooking = new Booking(userFormDB, eventFormDB);
-        return this.bookingRepository.save(newBooking);
+        if (this.bookingRepository.existsByUserId(userFormDB.getId())) {
+            throw new BadRequestException("YOU HAVE ALREADY A RESERVATION");
+        } else {
+            if (eventFormDB.getSeats() <= 0) {
+                throw new BadRequestException("THERE ARE NO AVAILABLE SEATS FOR THIS EVENT");
+            }
+            eventFormDB.setSeats(eventFormDB.getSeats() - 1);
+            Booking newBooking = new Booking(userFormDB, eventFormDB);
+            return this.bookingRepository.save(newBooking);
+        }
     }
 
 }
