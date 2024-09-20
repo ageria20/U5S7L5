@@ -5,6 +5,7 @@ import ageria.U5S7L5.dto.UserDTO;
 import ageria.U5S7L5.entities.User;
 import ageria.U5S7L5.exceptions.BadRequestException;
 import ageria.U5S7L5.exceptions.NotFoundException;
+import ageria.U5S7L5.repositories.BookingRepository;
 import ageria.U5S7L5.repositories.UserRepositoriy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,12 @@ public class UserService {
     @Autowired
     PasswordEncoder bcrypt;
 
+    @Autowired
+    BookingRepository bookingRepository;
+
 
     public Page<User> getAllUsers(int pages, int size, String sortBy) {
+        if (pages > 50) pages = 50;
         Pageable pageable = PageRequest.of(pages, size, Sort.by(sortBy));
         return this.userRepositoriy.findAll(pageable);
     }

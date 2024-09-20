@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookingService {
 
@@ -28,8 +30,13 @@ public class BookingService {
     UserService userService;
 
     public Page<Booking> getAllBookings(int pages, int size, String sortBy) {
+        if (pages > 50) pages = 50;
         Pageable pageable = PageRequest.of(pages, size, Sort.by(sortBy));
         return this.bookingRepository.findAll(pageable);
+    }
+
+    public List<Booking> getBookings(Long id) {
+        return this.bookingRepository.findByUserId(id);
     }
 
     public Booking findById(Long id) {

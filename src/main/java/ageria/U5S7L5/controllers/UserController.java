@@ -2,6 +2,7 @@ package ageria.U5S7L5.controllers;
 
 
 import ageria.U5S7L5.entities.User;
+import ageria.U5S7L5.service.BookingService;
 import ageria.U5S7L5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    BookingService bookingService;
+
 
     // 1. GET access only the ADMIN
     @GetMapping
@@ -28,10 +32,10 @@ public class UserController {
         return this.userService.getAllUsers(pages, size, sortBy);
     }
 
-    // PUT ME endpoint
+    // GET ME endpoint
     @GetMapping("/me")
     public User updateEmployeeProfile(@AuthenticationPrincipal User currentAuthenticatedUser) {
-        return currentAuthenticatedUser;
+        return (User) this.bookingService.getBookings((currentAuthenticatedUser.getId()));
     }
 
 

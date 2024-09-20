@@ -1,7 +1,6 @@
 package ageria.U5S7L5.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Table(name = "events")
-@JsonIgnoreProperties({"userManager"})
 public class Event {
 
     @Id

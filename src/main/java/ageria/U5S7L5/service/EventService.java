@@ -26,6 +26,7 @@ public class EventService {
 
 
     public Page<Event> getAllEvents(int pages, int size, String sortBy) {
+        if (pages > 50) pages = 50;
         Pageable pageable = PageRequest.of(pages, size, Sort.by(sortBy));
         return this.eventRepository.findAll(pageable);
     }
