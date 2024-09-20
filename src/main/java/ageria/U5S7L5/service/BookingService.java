@@ -39,7 +39,7 @@ public class BookingService {
     public Booking saveBooking(BookingDTO body) {
         Event eventFormDB = this.eventService.findById(body.event_id());
         User userFormDB = this.userService.findById(body.user_id());
-        if (this.bookingRepository.existsByUserId(userFormDB.getId())) {
+        if (this.bookingRepository.existsByUserIdAndEventId(userFormDB.getId(), eventFormDB.getId())) {
             throw new BadRequestException("YOU HAVE ALREADY A RESERVATION");
         } else {
             if (eventFormDB.getSeats() <= 0) {

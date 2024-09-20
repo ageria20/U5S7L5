@@ -21,6 +21,8 @@ public class BookingController {
     BookingService bookingService;
 
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public Page<Booking> findAll(@RequestParam(defaultValue = "0") int pages,
                                  @RequestParam(defaultValue = "10") int size,
                                  @RequestParam(defaultValue = "id") String sortBy) {

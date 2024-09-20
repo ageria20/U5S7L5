@@ -29,7 +29,7 @@ public class Event {
     private String eventPlace;
     private int seats;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "manager_id")
     private User userManager;
 
