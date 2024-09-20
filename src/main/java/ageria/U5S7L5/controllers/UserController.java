@@ -1,6 +1,7 @@
 package ageria.U5S7L5.controllers;
 
 
+import ageria.U5S7L5.entities.Booking;
 import ageria.U5S7L5.entities.User;
 import ageria.U5S7L5.service.BookingService;
 import ageria.U5S7L5.service.UserService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -34,8 +37,8 @@ public class UserController {
 
     // GET ME endpoint
     @GetMapping("/me")
-    public User updateEmployeeProfile(@AuthenticationPrincipal User currentAuthenticatedUser) {
-        return (User) this.bookingService.getBookings((currentAuthenticatedUser.getId()));
+    public List<Booking> updateEmployeeProfile(@AuthenticationPrincipal User currentAuthenticatedUser) {
+        return this.bookingService.getBookings((currentAuthenticatedUser.getId()));
     }
 
 
