@@ -1,22 +1,19 @@
 package ageria.U5S7L5.dto;
 
-import ageria.U5S7L5.enums.Role;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UserDTO(
-        @NotNull
+        @NotNull(message = "Name is required")
         @Size(min = 3, max = 20)
         String name,
-        @NotNull
+        @NotNull(message = "Surname is required")
         @Size(min = 3, max = 30)
         String surname,
-        @NotNull
+        @NotNull(message = "Email is required")
         String email,
-        @NotNull
-        @Size(min = 8)
-        String password,
-        @NotNull
-        Role role
+        @NotNull(message = "Password is required")
+        @Size(min = 4, max = 8)
+        String password
 ) {
 }
