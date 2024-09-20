@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record EventDTO(@NotNull(message = "Title is required")
-                       String Title,
+                       String title,
                        @NotNull(message = "Description event is required")
-                       String descrioption,
+                       String description,
                        @NotNull(message = "Event Date is required")
                        LocalDate eventDate,
                        @NotNull(message = "The Event Place is required")
@@ -16,4 +16,5 @@ public record EventDTO(@NotNull(message = "Title is required")
                        int seats,
                        @NotNull
                        Long manager_id) {
+
 }

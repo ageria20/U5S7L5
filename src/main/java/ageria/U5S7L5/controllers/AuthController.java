@@ -6,10 +6,10 @@ import ageria.U5S7L5.dto.UserLoginDTO;
 import ageria.U5S7L5.dto.UserRespDTO;
 import ageria.U5S7L5.exceptions.BadRequestException;
 import ageria.U5S7L5.service.AuthService;
+import ageria.U5S7L5.service.EventService;
 import ageria.U5S7L5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +26,9 @@ public class AuthController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    EventService eventService;
+
     // POST login
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -35,7 +38,7 @@ public class AuthController {
 
     // POST registration
     @PostMapping("/register")
-    @PreAuthorize("('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public NewUserDTO save(@RequestBody @Validated UserDTO body, BindingResult resultValidation) {
         if (resultValidation.hasErrors()) {

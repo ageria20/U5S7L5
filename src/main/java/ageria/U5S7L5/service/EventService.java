@@ -8,6 +8,10 @@ import ageria.U5S7L5.exceptions.BadRequestException;
 import ageria.U5S7L5.exceptions.NotFoundException;
 import ageria.U5S7L5.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +22,12 @@ public class EventService {
 
     @Autowired
     UserService userService;
+
+
+    public Page<Event> getAllEvents(int pages, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(pages, size, Sort.by(sortBy));
+        return this.eventRepository.findAll(pageable);
+    }
 
 
     public Event findById(Long id) {
@@ -31,14 +41,24 @@ public class EventService {
         }
         User user = this.userService.findById(body.manager_id());
         Event event = new Event(
-                body.Title(),
-                body.descrioption(),
+                body.title(),
+                body.description(),
                 body.eventDate(),
                 body.eventPlace(),
                 body.seats(),
                 user
         );
 
+        return this.eventRepository.save(event);
+    }
+
+    public Event findByIdAndUpdate(Long id, EventDTO body) {
+        Event event = this.findById(id);
+        event.setTitle(body.title());
+        event.setDescription(body.description());
+        event.setEventDate(body.eventDate());
+        event.setEventPlace(body.eventPlace());
+        event.setSeats(body.seats());
         return this.eventRepository.save(event);
     }
 }
