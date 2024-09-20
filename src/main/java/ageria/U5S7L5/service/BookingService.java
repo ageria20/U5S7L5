@@ -47,7 +47,7 @@ public class BookingService {
             }
             // avrei dovuto mettere una colonna in piu' che mi dicesse quanti posti ho liberi che mi li aggiornasse
             // e una colonna con un numero di posti fisso
-            eventFormDB.setSeats(eventFormDB.getSeats() - 1);
+            eventFormDB.setSeatsFree(eventFormDB.getSeatsFree() - 1);
             Booking newBooking = new Booking(userFormDB, eventFormDB);
             return this.bookingRepository.save(newBooking);
         }

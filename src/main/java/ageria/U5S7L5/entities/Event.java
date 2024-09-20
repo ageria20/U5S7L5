@@ -28,6 +28,7 @@ public class Event {
     @Column(name = "event_place")
     private String eventPlace;
     private int seats;
+    private int seatsFree;
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
@@ -40,5 +41,6 @@ public class Event {
         this.eventPlace = eventPlace;
         this.seats = seats;
         this.userManager = userManager;
+        this.seatsFree = seats;
     }
 }
